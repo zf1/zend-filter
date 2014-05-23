@@ -210,6 +210,8 @@ class Zend_Filter implements Zend_Filter_Interface
         $namespaces = array_merge((array) $namespaces, self::$_defaultNamespaces, array('Zend_Filter'));
         foreach ($namespaces as $namespace) {
             $className = $namespace . '_' . ucfirst($classBaseName);
+            if (!class_exists($className)) continue;
+            /*
             if (!class_exists($className, false)) {
                 try {
                     $file = str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
@@ -221,7 +223,7 @@ class Zend_Filter implements Zend_Filter_Interface
                 } catch (Zend_Exception $ze) {
                     continue;
                 }
-            }
+            }*/
 
             $class = new ReflectionClass($className);
             if ($class->implementsInterface('Zend_Filter_Interface')) {
